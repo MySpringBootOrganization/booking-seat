@@ -1,1 +1,5 @@
+com\booking\controller\BookingSeatController.class
+com\booking\model\Booking.class
 com\booking\Main.class
+com\booking\repository\BookingRepository.class
+com\booking\controller\BookingController.class

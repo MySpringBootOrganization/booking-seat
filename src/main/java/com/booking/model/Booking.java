@@ -2,15 +2,19 @@ package com.booking.model;
 
 import java.time.LocalDate;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Booking {
    
     private String name;
-    private int tableSize;
+    private Integer tableSize;
     private String bookingDate;
-    private int slot;
+    private Integer slot;
      
  
 }

@@ -36,4 +36,10 @@ public class BookingRepository {
     public static List<Booking> getAllBookings() {
         return new ArrayList<>(allBookings);
     }
+
+    public static void clearBookings() {
+        allBookings.clear();
+        bookingsByDate.clear();
+    }
+    // Optional: Remove a booking by ID (if needed)
 }

@@ -17,14 +17,20 @@ public class BookingController implements RouteHandler {
     public void handle(MuRequest request, MuResponse response, Map<String, String> pathParams) throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
 
-        Booking newBooking = new Booking();
+        
         Optional<InputStream> inputStreamOption = request.inputStream();
         if (inputStreamOption.isPresent()) {
             InputStream inputStream = inputStreamOption.get();
+            Booking newBooking = new Booking();
             newBooking = objectMapper.readValue(inputStream, Booking.class);
+            BookingRepository.addBooking(newBooking);
+        } else {
+            response.status(400);
+            response.write("Invalid booking data");
+            return;
         }
 
-       BookingRepository.addBooking(newBooking);
+       
 
         response.write("Booking successful");
     }
