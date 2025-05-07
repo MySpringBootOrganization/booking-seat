@@ -1,6 +1,7 @@
 package com.booking.controller;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Map;
 
@@ -16,9 +17,15 @@ import io.muserver.RouteHandler;
 public class BookingSeatController implements RouteHandler {
     @Override
     public void handle(MuRequest request, MuResponse response, Map<String, String> pathParams) throws Exception {
-        // Handle the booking seat logic here
-        String date = pathParams.get("date");
-        LocalDate bookingDate = LocalDate.parse(date);
+        LocalDate bookingDate;
+        try {
+            bookingDate = LocalDate.parse(pathParams.get("date"));
+        } catch (DateTimeParseException e) {
+            response.status(400);
+            return;
+        }
+        
+   
         List<Booking> bookingList = BookingRepository.getBookingsByDate(bookingDate);
         ObjectMapper mapper = new ObjectMapper()
             .registerModule(new JavaTimeModule()); 
