@@ -1,0 +1,32 @@
+package com.booking.controller;
+
+import java.io.InputStream;
+import java.util.Map;
+import java.util.Optional;
+
+import com.booking.model.Booking;
+import com.booking.repository.BookingRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import io.muserver.MuRequest;
+import io.muserver.MuResponse;
+import io.muserver.RouteHandler;
+
+public class BookingController implements RouteHandler {
+    @Override
+    public void handle(MuRequest request, MuResponse response, Map<String, String> pathParams) throws Exception {
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        Booking newBooking = new Booking();
+        Optional<InputStream> inputStreamOption = request.inputStream();
+        if (inputStreamOption.isPresent()) {
+            InputStream inputStream = inputStreamOption.get();
+            newBooking = objectMapper.readValue(inputStream, Booking.class);
+        }
+
+       BookingRepository.addBooking(newBooking);
+
+        response.write("Booking successful");
+    }
+
+}
